@@ -19,9 +19,6 @@
   },
   "homepage": "https://github.com/getto-systems/getto-elm-layout",
   "dependencies": {
-    "elm": "^0.18.0",
-    "elm-doc-test": "^2.2.3",
-    "elm-test": "^0.18.2",
     "gulp": "^3.9.1",
     "gulp-ejs": "^3.0.1",
     "gulp-elm": "^0.6.1",
