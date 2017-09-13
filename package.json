@@ -1,0 +1,33 @@
+{
+  "name": "getto-elm-layout",
+  "version": "0.0.1",
+  "description": "elm layout using getto-css",
+  "scripts": {
+    "livereload": "gulp livereload",
+    "build": "gulp build",
+    "test": "elm-doc-test && elm-test tests/Doc/Main.elm"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getto-systems/getto-elm-layout.git"
+  },
+  "author": "shun@getto.systems",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/getto-systems/getto-elm-layout/issues"
+  },
+  "homepage": "https://github.com/getto-systems/getto-elm-layout",
+  "dependencies": {
+    "elm": "^0.18.0",
+    "elm-doc-test": "^2.2.3",
+    "elm-test": "^0.18.2",
+    "gulp": "^3.9.1",
+    "gulp-ejs": "^3.0.1",
+    "gulp-elm": "^0.6.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-server-livereload": "^1.9.2",
+    "gulp-uglify": "^2.1.2"
+  }
+}
