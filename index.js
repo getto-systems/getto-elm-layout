@@ -11,9 +11,17 @@ const layout = function(opts){
   const elm     = require("gulp-elm");
   const uglify  = require("gulp-uglify");
   const server  = require("gulp-server-livereload");
+  const shell   = require("gulp-shell");
+
+  const routes = function(){
+    gulp.src(path.routes.script, {read: false})
+      .pipe(shell([
+        "bundle exec ruby <%= file.path %>"
+      ]));
+  };
 
   const template = function(){
-    const data = JSON.parse(fs.readFileSync(path.routes));
+    const data = JSON.parse(fs.readFileSync(path.routes.data));
     Object.keys(data).forEach(function(page){
       gulp.src(path.template)
         .pipe( plumber() )
@@ -46,8 +54,9 @@ const layout = function(opts){
         livereload: {enable: true, port: process.env.LABO_PORT_PREFIX + 29},
         open: true
       }) );
+    gulp.watch(path.routes.script,["routes"]);
+    gulp.watch(path.routes.data,["template"]);
     gulp.watch(path.src,["build"]);
-    gulp.watch(path.routes,["template"]);
   };
 
   return {
