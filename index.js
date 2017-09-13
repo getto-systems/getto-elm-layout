@@ -61,6 +61,7 @@ const layout = function(opts){
 
   return {
     task: function(){
+      gulp.task("routes", routes);
       gulp.task("template", template);
       gulp.task("build", build);
       gulp.task("livereload", livereload);
