@@ -17,7 +17,7 @@ const layout = function(opts){
     gulp.src(path.routes.script, {read: false})
       .pipe( plumber() )
       .pipe(shell([
-        "BUNDLE_PATH=" + path.bundle + " bundle exec ruby <%= file.path %>"
+        "BUNDLE_PATH=" + path.ruby + " bundle exec ruby <%= file.path %>"
       ]));
   };
 
@@ -43,7 +43,7 @@ const layout = function(opts){
   const build = function(){
     gulp.src(path.src)
       .pipe( plumber() )
-      .pipe( elm.bundle(path.bundle) )
+      .pipe( elm.bundle(path.elm) )
       .pipe( uglify() )
       .pipe( gulp.dest(path.dist) );
   };
