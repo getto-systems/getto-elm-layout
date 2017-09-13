@@ -15,6 +15,7 @@ const layout = function(opts){
 
   const routes = function(){
     gulp.src(path.routes.script, {read: false})
+      .pipe( plumber() )
       .pipe(shell([
         "bundle exec ruby <%= file.path %>"
       ]));
