@@ -21,7 +21,7 @@
   "dependencies": {
     "gulp": "^3.9.1",
     "gulp-ejs": "^3.0.1",
-    "gulp-elm": "^0.6.1",
+    "gulp-elm": "^0.7.2",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-server-livereload": "^1.9.2",
