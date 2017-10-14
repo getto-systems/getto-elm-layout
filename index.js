@@ -2,6 +2,7 @@
 
 const layout = function(opts){
   const path = opts.path;
+  const without_uglify = opts.without_uglify;
 
   const fs = require("fs");
   const gulp    = require("gulp");
@@ -41,11 +42,18 @@ const layout = function(opts){
   };
 
   const build = function(){
-    gulp.src(path.build)
-      .pipe( plumber() )
-      .pipe( elm.bundle(path.elm) )
-      .pipe( uglify() )
-      .pipe( gulp.dest(path.dist) );
+    if(!without_uglify) {
+      gulp.src(path.build)
+        .pipe( plumber() )
+        .pipe( elm.bundle(path.elm) )
+        .pipe( uglify() )
+        .pipe( gulp.dest(path.dist) );
+    } else {
+      gulp.src(path.build)
+        .pipe( plumber() )
+        .pipe( elm.bundle(path.elm) )
+        .pipe( gulp.dest(path.dist) );
+    }
   };
 
   const livereload = function(){
