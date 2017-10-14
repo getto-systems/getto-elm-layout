@@ -41,7 +41,7 @@ const layout = function(opts){
   };
 
   const build = function(){
-    gulp.src(path.src)
+    gulp.src(path.build)
       .pipe( plumber() )
       .pipe( elm.bundle(path.elm) )
       .pipe( uglify() )
@@ -57,7 +57,7 @@ const layout = function(opts){
       }) );
     gulp.watch(path.routes.script,["routes"]);
     gulp.watch(path.routes.data,["template"]);
-    gulp.watch(path.src,["build"]);
+    gulp.watch(path.watch,["build"]);
   };
 
   return {

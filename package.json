@@ -26,6 +26,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-server-livereload": "^1.9.2",
     "gulp-shell": "^0.6.3",
-    "gulp-uglify": "^2.1.2"
+    "gulp-uglify": "^3.0.0"
   }
 }
