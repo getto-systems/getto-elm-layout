@@ -31,7 +31,7 @@ const layout = function(opts){
         .pipe( rename(function(name){
           if(name.extname == ".elm"){
             name.dirname = path.main;
-            name.basename = data[page].module.replace(".","/");
+            name.basename = data[page].module.replace(/\./g,"/");
           } else {
             name.dirname = path.html;
             name.basename = page;
