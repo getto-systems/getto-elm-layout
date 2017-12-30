@@ -4,7 +4,8 @@ const layout = function(opts){
   const path = opts.path;
   const without_uglify = opts.without_uglify;
 
-  const fs = require("fs");
+  const fs      = require("fs");
+  const pump    = require("pump");
   const gulp    = require("gulp");
   const plumber = require("gulp-plumber");
   const ejs     = require("gulp-ejs");
@@ -41,13 +42,15 @@ const layout = function(opts){
     });
   };
 
-  const build = function(){
+  const build = function(cb){
     if(!without_uglify) {
-      gulp.src(path.build)
-        .pipe( plumber() )
-        .pipe( elm.bundle(path.elm) )
-        .pipe( uglify() )
-        .pipe( gulp.dest(path.dist) );
+      pump([
+        gulp.src(path.build),
+        plumber(),
+        elm.bundle(path.elm),
+        uglify(),
+        gulp.dest(path.dist),
+      ],cb);
     } else {
       gulp.src(path.build)
         .pipe( plumber() )
