@@ -15,21 +15,24 @@ const layout = function(opts){
   const server  = require("gulp-server-livereload");
   const shell   = require("gulp-shell");
 
-  const routes = function(){
-    gulp.src(path.routes.script, {read: false})
-      .pipe( plumber() )
-      .pipe(shell([
+  const routes = function(cb){
+    pump([
+      gulp.src(path.routes.script, {read: false}),
+      plumber(),
+      shell([
         "BUNDLE_PATH=" + path.ruby + " bundle exec ruby <%= file.path %>"
-      ]));
+      ]),
+    ],cb);
   };
 
-  const template = function(){
+  const template = function(cb){
     const data = JSON.parse(fs.readFileSync(path.routes.data));
     Object.keys(data).forEach(function(page){
-      gulp.src(path.template)
-        .pipe( plumber() )
-        .pipe( ejs(data[page]) )
-        .pipe( rename(function(name){
+      pump([
+        gulp.src(path.template)
+        plumber(),
+        ejs(data[page]),
+        rename(function(name){
           if(name.extname == ".elm"){
             name.dirname = path.main;
             name.basename = data[page].module.replace(/\./g,"/");
@@ -37,8 +40,9 @@ const layout = function(opts){
             name.dirname = path.html;
             name.basename = page;
           }
-        }) )
-        .pipe( gulp.dest(path.root) );
+        }),
+        gulp.dest(path.root),;
+      ],cb);
     });
   };
 
@@ -52,20 +56,24 @@ const layout = function(opts){
         gulp.dest(path.dist),
       ],cb);
     } else {
-      gulp.src(path.build)
-        .pipe( plumber() )
-        .pipe( elm.bundle(path.elm) )
-        .pipe( gulp.dest(path.dist) );
+      pump([
+        gulp.src(path.build)
+        plumber(),
+        elm.bundle(path.elm),
+        gulp.dest(path.dist),
+      ],cb);
     }
   };
 
-  const livereload = function(){
-    gulp.src(path.html)
-      .pipe( server({
+  const livereload = function(cb){
+    pump([
+      gulp.src(path.html),
+      server({
         host: "0.0.0.0",
         livereload: {enable: true, port: process.env.LABO_PORT_PREFIX + 29},
         open: true
-      }) );
+      }),
+    ],cb);
     gulp.watch(path.routes.script,["routes"]);
     gulp.watch(path.routes.data,["template"]);
     gulp.watch(path.watch,["build"]);
