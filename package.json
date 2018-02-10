@@ -19,20 +19,21 @@
   },
   "homepage": "https://github.com/getto-systems/getto-elm-layout",
   "dependencies": {
+    "elm": "^0.18.0",
+    "elm-test": "^0.18.12",
     "gulp": "^3.9.1",
     "gulp-ejs": "^3.0.1",
     "gulp-elm": "^0.7.2",
+    "gulp-elm-test": "^1.0.3",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-server-livereload": "^1.9.2",
     "gulp-shell": "^0.6.3",
     "gulp-uglify": "^3.0.0",
     "ms": "~> 0.7.1",
-    "serve-index": "~> 1.6.3",
-    "send": "~> 0.11.1"
+    "pump": "^2.0.0",
+    "send": "~> 0.11.1",
+    "serve-index": "~> 1.6.3"
   },
-  "devDependencies": {
-    "gulp-elm-test": "^1.0.3",
-    "pump": "^2.0.0"
-  }
+  "devDependencies": {}
 }
