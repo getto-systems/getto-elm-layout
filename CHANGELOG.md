@@ -1,3 +1,9 @@
+# Version : 0.0.15
+
+add gulp-elm-test
+
+- upgrade: add path to 'test' entry
+
 # Version : 0.0.14
 
 add git-release-request rc file
