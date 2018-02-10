@@ -4,19 +4,12 @@ const layout = function(opts){
   const path = opts.path;
   const without_uglify = opts.without_uglify;
 
-  const fs      = require("fs");
-  const pump    = require("pump");
-  const gulp    = require("gulp");
-  const plumber = require("gulp-plumber");
-  const ejs     = require("gulp-ejs");
-  const rename  = require("gulp-rename");
-  const elm     = require("gulp-elm");
-  const elmTest = require("gulp-elm-test");
-  const uglify  = require("gulp-uglify");
-  const server  = require("gulp-server-livereload");
-  const shell   = require("gulp-shell");
-
   const routes = function(cb){
+    const gulp    = require("gulp");
+    const pump    = require("pump");
+    const plumber = require("gulp-plumber");
+    const shell   = require("gulp-shell");
+
     pump([
       gulp.src(path.routes.script, {read: false}),
       plumber(),
@@ -27,6 +20,13 @@ const layout = function(opts){
   };
 
   const template = function(cb){
+    const gulp    = require("gulp");
+    const pump    = require("pump");
+    const plumber = require("gulp-plumber");
+    const fs      = require("fs");
+    const ejs     = require("gulp-ejs");
+    const rename  = require("gulp-rename");
+
     const data = JSON.parse(fs.readFileSync(path.routes.data));
     Object.keys(data).forEach(function(page){
       pump([
@@ -48,6 +48,12 @@ const layout = function(opts){
   };
 
   const build = function(cb){
+    const gulp    = require("gulp");
+    const pump    = require("pump");
+    const plumber = require("gulp-plumber");
+    const elm     = require("gulp-elm");
+    const uglify  = require("gulp-uglify");
+
     if(!without_uglify) {
       pump([
         gulp.src(path.build),
@@ -67,6 +73,11 @@ const layout = function(opts){
   };
 
   const test = function(cb){
+    const gulp    = require("gulp");
+    const pump    = require("pump");
+    const plumber = require("gulp-plumber");
+    const elmTest = require("gulp-elm-test");
+
     pump([
       gulp.src(path.test),
       plumber(),
@@ -75,6 +86,10 @@ const layout = function(opts){
   };
 
   const livereload = function(cb){
+    const gulp   = require("gulp");
+    const pump   = require("pump");
+    const server = require("gulp-server-livereload");
+
     pump([
       gulp.src(path.html),
       server({
@@ -91,6 +106,8 @@ const layout = function(opts){
 
   return {
     task: function(){
+      const gulp    = require("gulp");
+
       gulp.task("routes", routes);
       gulp.task("template", template);
       gulp.task("build", build);
