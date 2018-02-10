@@ -90,8 +90,8 @@ const layout = function(opts){
     ],cb);
     gulp.watch(path.routes.script,["routes"]);
     gulp.watch(path.routes.data,["template"]);
-    gulp.watch(path.watch,["build"]);
-    gulp.watch(path.watch,["test"]);
+    gulp.watch(path.watch.build,["build"]);
+    gulp.watch(path.watch.test,["test"]);
   };
 
   return {
