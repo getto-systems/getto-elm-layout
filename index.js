@@ -68,12 +68,12 @@ const layout = function(opts){
   };
 
   const test = function(cb){
-    const elmTest = require("gulp-elm-test");
+    const shell = require("gulp-shell");
 
     pump([
       gulp.src(path.test),
       plumber(),
-      elmTest(),
+      shell([ "elm-test" ]),
     ],cb);
   };
 
