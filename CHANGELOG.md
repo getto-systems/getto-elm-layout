@@ -1,3 +1,9 @@
+# Version : 0.0.17
+
+fix: watch path
+
+- upgrade: watch -> watch.{build,test}
+
 # Version : 0.0.16
 
 fix requires
