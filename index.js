@@ -11,6 +11,7 @@ const layout = function(opts){
   const ejs     = require("gulp-ejs");
   const rename  = require("gulp-rename");
   const elm     = require("gulp-elm");
+  const elmTest = require("gulp-elm-test");
   const uglify  = require("gulp-uglify");
   const server  = require("gulp-server-livereload");
   const shell   = require("gulp-shell");
@@ -65,6 +66,14 @@ const layout = function(opts){
     }
   };
 
+  const test = function(cb){
+    pump([
+      gulp.src(path.test),
+      plumber(),
+      elmTest(),
+    ],cb);
+  };
+
   const livereload = function(cb){
     pump([
       gulp.src(path.html),
@@ -77,6 +86,7 @@ const layout = function(opts){
     gulp.watch(path.routes.script,["routes"]);
     gulp.watch(path.routes.data,["template"]);
     gulp.watch(path.watch,["build"]);
+    gulp.watch(path.watch,["test"]);
   };
 
   return {
@@ -84,6 +94,7 @@ const layout = function(opts){
       gulp.task("routes", routes);
       gulp.task("template", template);
       gulp.task("build", build);
+      gulp.task("test", test);
       gulp.task("livereload", livereload);
     }
   };
