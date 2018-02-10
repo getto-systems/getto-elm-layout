@@ -4,11 +4,12 @@ const layout = function(opts){
   const path = opts.path;
   const without_uglify = opts.without_uglify;
 
+  const gulp    = require("gulp");
+  const pump    = require("pump");
+  const plumber = require("gulp-plumber");
+
   const routes = function(cb){
-    const gulp    = require("gulp");
-    const pump    = require("pump");
-    const plumber = require("gulp-plumber");
-    const shell   = require("gulp-shell");
+    const shell = require("gulp-shell");
 
     pump([
       gulp.src(path.routes.script, {read: false}),
@@ -20,17 +21,14 @@ const layout = function(opts){
   };
 
   const template = function(cb){
-    const gulp    = require("gulp");
-    const pump    = require("pump");
-    const plumber = require("gulp-plumber");
-    const fs      = require("fs");
-    const ejs     = require("gulp-ejs");
-    const rename  = require("gulp-rename");
+    const fs     = require("fs");
+    const ejs    = require("gulp-ejs");
+    const rename = require("gulp-rename");
 
     const data = JSON.parse(fs.readFileSync(path.routes.data));
     Object.keys(data).forEach(function(page){
       pump([
-        gulp.src(path.template)
+        gulp.src(path.template),
         plumber(),
         ejs(data[page]),
         rename(function(name){
@@ -42,17 +40,14 @@ const layout = function(opts){
             name.basename = page;
           }
         }),
-        gulp.dest(path.root),;
+        gulp.dest(path.root),
       ],cb);
     });
   };
 
   const build = function(cb){
-    const gulp    = require("gulp");
-    const pump    = require("pump");
-    const plumber = require("gulp-plumber");
-    const elm     = require("gulp-elm");
-    const uglify  = require("gulp-uglify");
+    const elm    = require("gulp-elm");
+    const uglify = require("gulp-uglify");
 
     if(!without_uglify) {
       pump([
@@ -73,9 +68,6 @@ const layout = function(opts){
   };
 
   const test = function(cb){
-    const gulp    = require("gulp");
-    const pump    = require("pump");
-    const plumber = require("gulp-plumber");
     const elmTest = require("gulp-elm-test");
 
     pump([
@@ -86,8 +78,6 @@ const layout = function(opts){
   };
 
   const livereload = function(cb){
-    const gulp   = require("gulp");
-    const pump   = require("pump");
     const server = require("gulp-server-livereload");
 
     pump([
@@ -106,8 +96,6 @@ const layout = function(opts){
 
   return {
     task: function(){
-      const gulp    = require("gulp");
-
       gulp.task("routes", routes);
       gulp.task("template", template);
       gulp.task("build", build);
