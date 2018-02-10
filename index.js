@@ -59,7 +59,7 @@ const layout = function(opts){
       ],cb);
     } else {
       pump([
-        gulp.src(path.build)
+        gulp.src(path.build),
         plumber(),
         elm.bundle(path.elm),
         gulp.dest(path.dist),
