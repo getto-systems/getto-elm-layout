@@ -53,11 +53,14 @@ const layout = function(opts){
         .pipe(plumber())
         .pipe(shell(
           [
-            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_DIST"'
+            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_TMP"',
+            'uglifyjs --compress --mangle --output "$ELM_DIST" -- "$ELM_TMP"',
+            'rm -f "$ELM_TMP"'
           ],
           {
             env: {
               ELM_SRC:  path.main,
+              ELM_TMP:  path.tmp,
               ELM_DIST: path.dist
             }
           }
@@ -67,14 +70,11 @@ const layout = function(opts){
         .pipe(plumber())
         .pipe(shell(
           [
-            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_TMP"',
-            'uglifyjs --compress --mangle --output "$ELM_DIST" -- "$ELM_TMP"',
-            'rm -f "$ELM_TMP"'
+            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_DIST"'
           ],
           {
             env: {
               ELM_SRC:  path.main,
-              ELM_TMP:  path.tmp,
               ELM_DIST: path.dist
             }
           }
