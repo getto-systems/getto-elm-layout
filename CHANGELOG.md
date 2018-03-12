@@ -1,3 +1,7 @@
+# Version : 0.0.24
+
+fix: elm make
+
 # Version : 0.0.23
 
 fix: without uglify
