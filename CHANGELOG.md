@@ -1,3 +1,7 @@
+# Version : 0.0.22
+
+fix: elm build command
+
 # Version : 0.0.21
 
 fix: build command
