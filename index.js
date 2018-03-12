@@ -46,23 +46,19 @@ const layout = function(opts){
   };
 
   const build = function(cb){
-    const elm    = require("gulp-elm");
-    const uglify = require("gulp-uglify");
+    const shell = require("gulp-shell");
 
     if(!without_uglify) {
       pump([
-        gulp.src(path.build),
         plumber(),
-        elm.bundle(path.elm),
-        uglify(),
-        gulp.dest(path.dist),
+        shell([ "elm-make", path.build, "--output", path.dist ]),
       ],cb);
     } else {
       pump([
-        gulp.src(path.build),
         plumber(),
-        elm.bundle(path.elm),
-        gulp.dest(path.dist),
+        shell([ "elm-make", path.build, "--output", path.tmp ]),
+        shell([ "uglifyjs", "--compress", "--mangle", "--", path.tmp, "--output", path.dist ]),
+        shell([ "rm", "-f", path.tmp ]),
       ],cb);
     }
   };
@@ -71,7 +67,6 @@ const layout = function(opts){
     const shell = require("gulp-shell");
 
     pump([
-      gulp.src(path.test),
       plumber(),
       shell([ "elm-test" ]),
     ],cb);
