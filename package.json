@@ -1,6 +1,6 @@
 {
   "name": "getto-elm-layout",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "elm layout using getto-css",
   "scripts": {
     "livereload": "gulp livereload",
