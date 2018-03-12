@@ -45,31 +45,49 @@ const layout = function(opts){
     });
   };
 
-  const build = function(cb){
+  const build = function(){
     const shell = require("gulp-shell");
 
     if(!without_uglify) {
-      pump([
-        plumber(),
-        shell([ "elm-make " + path.build + " --output " + path.dist ]),
-      ],cb);
+      gulp.src(".", {read: false})
+        .pipe(plumber())
+        .pipe(shell(
+          [
+            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_DIST"'
+          ],
+          {
+            env: {
+              ELM_SRC:  path.main,
+              ELM_DIST: path.dist
+            }
+          }
+        ));
     } else {
-      pump([
-        plumber(),
-        shell([ "elm-make " + path.build + " --output " + path.tmp ]),
-        shell([ "uglifyjs --compress --mangle -- " + path.tmp + " --output " + path.dist ]),
-        shell([ "rm -f " + path.tmp ]),
-      ],cb);
+      gulp.src(".", {read: false})
+        .pipe(plumber())
+        .pipe(shell(
+          [
+            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_TMP"',
+            'uglifyjs --compress --mangle --output "$ELM_DIST" -- "$ELM_TMP"',
+            'rm -f "$ELM_TMP"'
+          ],
+          {
+            env: {
+              ELM_SRC:  path.main,
+              ELM_TMP:  path.tmp,
+              ELM_DIST: path.dist
+            }
+          }
+        ));
     }
   };
 
-  const test = function(cb){
+  const test = function(){
     const shell = require("gulp-shell");
 
-    pump([
-      plumber(),
-      shell([ "elm-test" ]),
-    ],cb);
+    gulp.src(".", {read: false})
+      .pipe(plumber())
+      .pipe(shell(['elm-test']));
   };
 
   const livereload = function(cb){
