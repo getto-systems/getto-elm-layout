@@ -1,3 +1,7 @@
+# Version : 0.0.23
+
+fix: without uglify
+
 # Version : 0.0.22
 
 fix: elm build command
