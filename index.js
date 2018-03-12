@@ -51,14 +51,14 @@ const layout = function(opts){
     if(!without_uglify) {
       pump([
         plumber(),
-        shell([ "elm-make", path.build, "--output", path.dist ]),
+        shell([ "elm-make " + path.build + " --output " + path.dist ]),
       ],cb);
     } else {
       pump([
         plumber(),
-        shell([ "elm-make", path.build, "--output", path.tmp ]),
-        shell([ "uglifyjs", "--compress", "--mangle", "--", path.tmp, "--output", path.dist ]),
-        shell([ "rm", "-f", path.tmp ]),
+        shell([ "elm-make " + path.build + " --output " + path.tmp ]),
+        shell([ "uglifyjs --compress --mangle -- " + path.tmp + " --output " + path.dist ]),
+        shell([ "rm -f " + path.tmp ]),
       ],cb);
     }
   };
