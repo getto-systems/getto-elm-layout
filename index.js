@@ -46,39 +46,24 @@ const layout = function(opts){
   };
 
   const build = function(){
-    const shell = require("gulp-shell");
+    const elm    = require("gulp-elm");
+    const uglify = require("gulp-uglify");
 
     if(!without_uglify) {
-      gulp.src(".", {read: false})
-        .pipe(plumber())
-        .pipe(shell(
-          [
-            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_TMP"',
-            'uglifyjs --compress --mangle --output "$ELM_DIST" -- "$ELM_TMP"',
-            'rm -f "$ELM_TMP"'
-          ],
-          {
-            env: {
-              ELM_SRC:  path.main,
-              ELM_TMP:  path.tmp,
-              ELM_DIST: path.dist
-            }
-          }
-        ));
+      pump([
+        gulp.src(path.build),
+        plumber(),
+        elm.bundle(path.elm),
+        uglify(),
+        gulp.dest(path.dist),
+      ],cb);
     } else {
-      gulp.src(".", {read: false})
-        .pipe(plumber())
-        .pipe(shell(
-          [
-            'elm-make `find "$ELM_SRC" -type f` --output "$ELM_DIST"'
-          ],
-          {
-            env: {
-              ELM_SRC:  path.main,
-              ELM_DIST: path.dist
-            }
-          }
-        ));
+      pump([
+        gulp.src(path.build),
+        plumber(),
+        elm.bundle(path.elm),
+        gulp.dest(path.dist),
+      ],cb);
     }
   };
 
