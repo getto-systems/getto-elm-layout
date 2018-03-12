@@ -45,7 +45,7 @@ const layout = function(opts){
     });
   };
 
-  const build = function(){
+  const build = function(cb){
     const elm    = require("gulp-elm");
     const uglify = require("gulp-uglify");
 
